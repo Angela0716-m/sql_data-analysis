@@ -80,52 +80,6 @@
 </div>
 </section>
 
-<section>
-<h2>Analytical SQL Examples</h2>
-
-<div class="card">
-<h3>Monthly Active Users</h3>
-<code>
-SELECT month, COUNT(DISTINCT user_key) active_users
-FROM fact_sessions
-GROUP BY month;
-</code>
-</div>
-
-<div class="card">
-<h3>30-Day Retention Rate</h3>
-<code>
-SELECT COUNT(DISTINCT s.user_key)*100.0/
-COUNT(DISTINCT u.user_key) retention_rate
-FROM dim_user u
-LEFT JOIN fact_sessions s
-ON u.user_key=s.user_key
-AND DATEDIFF(day,u.signup_date,s.session_date)&lt;=30;
-</code>
-</div>
-
-<div class="card">
-<h3>High Value Users</h3>
-<code>
-SELECT user_key,
-COUNT(module_key)*2 + COUNT(session_id) + COUNT(certification_id)*5 engagement_score
-FROM fact_learning_activity
-GROUP BY user_key
-ORDER BY engagement_score DESC;
-</code>
-</div>
-
-<div class="card">
-<h3>Confidence Growth</h3>
-<code>
-SELECT AVG(post_score - pre_score) confidence_improvement
-FROM fact_confidence;
-</code>
-</div>
-
-</section>
-
-<section>
 <h2>Dashboard Outputs</h2>
 <div class="card">
 <ul>
